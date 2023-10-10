@@ -250,7 +250,7 @@ disable-fzf-tab() {
   emulate -L zsh -o extended_glob
   (( $+_ftb_orig_widget )) || return 0
 
-  bindkey '^I' $_ftb_orig_widget
+  # bindkey '^I' $_ftb_orig_widget
   case $_ftb_orig_list_grouped in
     0) zstyle ':completion:*' list-grouped false ;;
     1) zstyle ':completion:*' list-grouped true ;;
@@ -301,10 +301,10 @@ enable-fzf-tab() {
   typeset -g _ftb_orig_list_grouped=$?
 
   zstyle ':completion:*' list-grouped false
-  bindkey -M emacs '^I'  fzf-tab-complete
-  bindkey -M viins '^I'  fzf-tab-complete
-  bindkey -M emacs '^X.' fzf-tab-debug
-  bindkey -M viins '^X.' fzf-tab-debug
+  bindkey -M emacs '^X'  fzf-tab-complete
+  bindkey -M viins '^X'  fzf-tab-complete
+  # bindkey -M emacs '^X.' fzf-tab-debug
+  # bindkey -M viins '^X.' fzf-tab-debug
 
   # make sure we can copy them
   autoload +X -Uz _main_complete _approximate
