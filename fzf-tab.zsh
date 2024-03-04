@@ -126,7 +126,7 @@ builtin unalias -m '[^+]*'
 
       if (( ! _ftb_continue_last )) \
         && [[ $compstate[insert] == *"unambiguous" ]] \
-        && [[ "$compstate[unambiguous]" != "$PREFIX" ]]; then
+        && [[ "$compstate[unambiguous]" != "$IPREFIX$PREFIX" ]]; then
         compstate[list]=
         compstate[insert]=unambiguous
         _ftb_finish=1
@@ -214,7 +214,12 @@ fzf-tab-debug() {
     local -a debug_indent; debug_indent=( '%'{3..20}'(e. .)' )
     local PROMPT4 PS4="${(j::)debug_indent}+%N:%i> "
     functions -t -- -ftb-complete  _fzf-tab-apply fzf-tab-complete
-    echo $ZSH_NAME $ZSH_VERSION >&2
+    {
+      echo $ZSH_NAME $ZSH_VERSION
+      echo fzf-tab: $(-ftb-version)
+      typeset -p FZF_DEFAULT_OPTS
+      echo $commands[fzf] $(fzf --version)
+    } >&2
     zle fzf-tab-complete
     if (( debug_fd != -1 )); then
       zle -M "fzf-tab-debug: Trace output left in $tmp"
